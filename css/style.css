@@ -1,0 +1,6 @@
+body { font-style: itaalic; font-family: 'Times New Roman', Times, serif;}
+div, a { color: red; font-weight: bold;}
+p { color: green; font-size: 2em;}
+#description { color: blue; }
+.title { color: yellow; }
+#sub-desc { color: #ffaacc; }
