@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 dialog</title>
+</head>
+<body>
+    <div>
+        <dialog id="myFirstDialog">
+            <p><q>Cause you're my Iron Man And I love you 3000 Baby.</q> - <cite>take a chance</cite></p>
+            <button id="hide">Close</button>
+        </dialog>
+        <!-- "show" button -->
+        <button id="show">Show Dialog</button>
+    </div>
+    <!-- JavaScript to provide the "show/Close" functionality -->
+    <script>
+        (function(){
+            var dialog = document.getElementById('myFirstDialog');
+            document.getElementById('show').onclick = function(){
+                dialog.showModal();
+            };
+            document.getElementById('hide').onclick = function(){
+                dialog.close();
+            };
+        })();
+    </script>
+</body>
+</html>
