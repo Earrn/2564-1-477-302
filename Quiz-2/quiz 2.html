@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quiz2 HTML5</title>
+        <style>
+            body {background-color: lightblue;}
+            body {background-image: url("ช้าง.png");
+                background-repeat: no-repeat;
+                background-position: right top;
+                height: 200px;
+                width: 35%;}
+            body {color: cornflowerblue; font-family: 'Mali', cursive; font-size: 2em;}
+            h1 {color: darkkhaki;}
+            p {color: deeppink; font-size: medium; font-size: 1em;}
+        </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Mali&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <center><h1>WELCOME</h1></center>
+            <center><h2>เข้าสู่ระบบ</h2></center>
+            
+            <dialog id="favDialog">
+                <form action="/action_page.php">
+                    <p><label for="fname">First name:</label></p>
+                    <input type="text" id="fname" name="fname"><br><br>
+                    <input type="hidden" id="custId" name="custId" value="3487">
+                </form>
+                <form>
+                    <menu>
+                        <button value="cancel">Cancel</button>
+                        <button id="confirmBtn" value="default">Confirm</button>
+                    </menu>
+                </form>
+            </dialog>
+            
+            <center><menu>
+                <button id="updateDetails">Submit</button>
+            </menu></center>
+            <script>
+                var updateButton = document.getElementById('updateDetails');
+                var favDialog = document.getElementById('favDialog');
+                var outputBox = document.querySelector('output');
+
+                updateButton.addEventListener('click', function onOpen() {
+                    if (typeof favDialog.showModal === "function") {
+                        favDialog.showModal();
+                    } else {
+                        alert("The <dialog> API is not supported by this browser");
+                    }
+                });
+            </script>
+        </header>
+        
+        <center><button onclick="clickCounter()" id = "find-me">Show my location</button><br/></center>
+        <p id = "status"></p>
+        <a id = "map-link" target="_blank"></a>
+        <div id="result"></div>
+        <head>
+            <script>
+            function clickCounter() {
+              if (typeof(Storage) !== "undefined") {
+                if (localStorage.clickcount) {
+                  localStorage.clickcount = Number(localStorage.clickcount)+1;
+                } else {
+                  localStorage.clickcount = 1;
+                }
+                document.getElementById("result").innerHTML = "You have clicked the button " + localStorage.clickcount + " time(s).";
+              } else {
+                document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+              }
+            }
+            </script>
+        </head>
+
+        <script>
+        function geoFindMe() {
+    
+            const status = document.querySelector('#status');
+            const mapLink = document.querySelector('#map-link');
+    
+            mapLink.href = '';
+            mapLink.textContent = '';
+    
+            function success(position) {
+                const latitude  = position.coords.latitude;
+                const longitude = position.coords.longitude;
+    
+                status.textContent = '';
+                mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+                mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+            }
+    
+            function error() {
+                status.textContent = 'Unable to retrieve your location';
+            }
+            
+            if(!navigator.geolocation) {
+                status.textContent = 'Geolocation is not supported by your browser';
+            } else {
+                status.textContent = 'Locating…';
+                navigator.geolocation.getCurrentPosition(success, error);
+            }
+        }
+        document.querySelector('#find-me').addEventListener('click', geoFindMe);
+        </script>
+    </body>
+</html>
