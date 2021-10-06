@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TITLE</title>
+    <link rel="stylesheet" href="PATH">
+    <!-- การนับจำนวนclick -->
+    <script>
+    function clickCounter(){
+        if(typeof(Storage) !== "undefined") {
+            if (localStorage.clickCounter){
+                localStorage.clickCounter = Number(localStorage.clickCounter)+1;
+            } else{
+                localStorage.clickCounter = 1;
+            }
+            document.getElementById("result").innerHTML = "You have clicked the button" + localStorage.clickCounter + "time(s).";
+        } else{
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage..."
+        }
+    }
+    function clearCounter(){
+        if (localStorage.clickCounter){
+            localStorage.removeItem("clickCounter");
+        } else{
+            document.getElementById("result").innerHTML = "No local storage!";
+        }
+    }
+    </script>
+</head>
+<body>
+    
+    <p><button onclick="clickCounter()" type="button">Click me!</button></p>
+    <p><button onclick="clearCounter()" type="button">Clear me!</button></p>
+    <div id="result"></div>
+
+</body>
+</html>

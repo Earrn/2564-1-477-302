@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITLE</title>
+    <script>
+    function chkUsername(){
+        if(typeof(Storage) !== "undefined"){
+            if (localStorage.username){
+                document.getElementById("div1").innerHTML = localStorage.username;
+            } else{
+                document.getElementById("div1").innerHTML = "<input ttpe='text' id='username'>";
+            }
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+    }
+    function saveUsername(){
+        uname = document.getElementById("username");
+        localStorage.username = uname.value;
+        chkUsername();
+    }
+    function drlUsername(){
+        localStorage.removeItem("username");
+        chkUsername();
+    }
+    </script>
+</head>
+<body onload="chkUsername()">
+    User Name:<div id="div1"></div>
+    Password:<div id="div1"><input type="password" id="password"></div>
+    <p><button onclick="saveUsername()" type="button">Save</button>
+    <button onclick="delUsername()" type="button">Delete</button></p>
+    <div id="result"></div>
+</body>
+</html>
