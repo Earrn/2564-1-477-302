@@ -1,5 +1,56 @@
 <?php
 		//2.save regist info into database
+	    //2.1. insert user data into database
+		include_once "dbconnect.php";
+		
+		//check if form or submit button is submitted
+		if (isset($_POST['signup'])) {
+			//get data into variables
+			$name = $_POST['user-name'];
+			$email = $_POST['user-email'];
+			$passwd = $_POST['user-password'];
+			$cpasswd = $_POST['user-cpassword'];
+
+		//2.2. validate user data
+		//set validatetion error flag as false
+		$validate_error = false;
+		//validation error message
+		$validate_msg = "";
+
+		//validate e-mail format
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$validate_error = true;
+			$validate_msg = "E-mail is not correct.";
+		}
+
+
+		//validate length of password
+		if (strlen($passwd) < 6) {
+			$validate_error = true;
+			$validate_msg = "Password must be more than 6 characters.";
+		}
+
+        //validate password & confirm password
+		if ($passwd != $cpasswd) {
+			$validate_error = true;
+			$validate_msg = "Password amd confirm password do not match.";
+		}
+
+        if (!$validate_error) {
+		    $sql = "INSERT INTO users(user_name, user_email, user_passwd) 
+		    VALUES('" . $name. "', '" . $email . "', '" . md5($passwd) . "')";
+
+		    if (mysqli_query($con, $sql)) {
+				//execute without error
+                header("location: login.php");	
+			} else {
+				//error
+				
+			}
+			
+		}
+	}
+		
 
 ?>
 
@@ -44,22 +95,22 @@
 
 					<div class="form-group">
 						<label for="name">Name</label>
-						<input type="text" name="name" placeholder="Enter Full Name" required value="" class="form-control" />
+						<input type="text" name="user-name" placeholder="Enter Full Name" required value="" class="form-control" />
 					</div>
 
 					<div class="form-group">
 						<label for="name">Email</label>
-						<input type="text" name="email" placeholder="Email" required value="" class="form-control" />
+						<input type="text" name="user-email" placeholder="Email" required value="" class="form-control" />
 					</div>
 
 					<div class="form-group">
 						<label for="name">Password</label>
-						<input type="password" name="password" placeholder="Password" required class="form-control" />
+						<input type="password" name="user-password" placeholder="Password" required class="form-control" />
 					</div>
 
 					<div class="form-group">
 						<label for="name">Confirm Password</label>
-						<input type="password" name="cpassword" placeholder="Confirm Password" required class="form-control" />
+						<input type="password" name="user-cpassword" placeholder="Confirm Password" required class="form-control" />
 					</div>
 
 					<div class="form-group">
@@ -68,7 +119,13 @@
 				</fieldset>
 			</form>
 			<!--3.display message -->
-
+			<?php
+			    if (isset($validate_error)) {
+					if ($validate_error) {
+						echo $validate_msg;
+					}
+				}
+			?>
 		</div>
 	</div>
 	<div class="row">
